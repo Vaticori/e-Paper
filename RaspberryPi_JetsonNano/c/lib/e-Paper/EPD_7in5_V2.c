@@ -58,26 +58,48 @@ static void EPD_SendCommand(UBYTE Reg)
     DEV_Digital_Write(EPD_CS_PIN, 1);
 }
 
+
+
+
+
+
+
+
+
+
+
 /******************************************************************************
 function :	send data
 parameter:
     Data : Write data
 ******************************************************************************/
-static void EPD_SendData(UBYTE Data)
+static void EPD_SendData(UBYTE Data) //sends 1 byte
 {
-    DEV_Digital_Write(EPD_DC_PIN, 1);
-    DEV_Digital_Write(EPD_CS_PIN, 0);
+    DEV_Digital_Write(EPD_DC_PIN, 1); //DC HIGH = write DATA
+    DEV_Digital_Write(EPD_CS_PIN, 0); //CSB ACTIVE LOW!
     DEV_SPI_WriteByte(Data);
-    DEV_Digital_Write(EPD_CS_PIN, 1);
+    DEV_Digital_Write(EPD_CS_PIN, 1); //set CSB HIGH inbetween processes
 }
 
-static void EPD_SendData2(UBYTE *pData, UDOUBLE len)
+static void EPD_SendData2(UBYTE *pData, UDOUBLE len) //sends multiple bytes
 {
     DEV_Digital_Write(EPD_DC_PIN, 1);
     DEV_Digital_Write(EPD_CS_PIN, 0);
     DEV_SPI_Write_nByte(pData, len);
     DEV_Digital_Write(EPD_CS_PIN, 1);
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 /******************************************************************************
 function :	Wait until the busy_pin goes LOW
@@ -259,6 +281,11 @@ void EPD_7IN5_V2_ClearBlack(void)
     EPD_7IN5_V2_TurnOnDisplay();
 }
 
+
+
+
+
+
 /******************************************************************************
 function :	Sends the image buffer in RAM to e-Paper and displays
 parameter:
@@ -269,7 +296,7 @@ void EPD_7IN5_V2_Display(UBYTE *blackimage)
     Width =(EPD_7IN5_V2_WIDTH % 8 == 0)?(EPD_7IN5_V2_WIDTH / 8 ):(EPD_7IN5_V2_WIDTH / 8 + 1);
     Height = EPD_7IN5_V2_HEIGHT;
 	
-    EPD_SendCommand(0x10);
+    EPD_SendCommand(0x10); //or, 0001 0000 IN BINARY which u get by doing 2^4 =16
     for (UDOUBLE j = 0; j < Height; j++) {
         EPD_SendData2((UBYTE *)(blackimage+j*Width), Width);
     }
@@ -285,6 +312,12 @@ void EPD_7IN5_V2_Display(UBYTE *blackimage)
     }
     EPD_7IN5_V2_TurnOnDisplay();
 }
+
+
+
+
+
+
 
 void EPD_7IN5_V2_Display_Part(UBYTE *blackimage,UDOUBLE x_start, UDOUBLE y_start, UDOUBLE x_end, UDOUBLE y_end)
 {
