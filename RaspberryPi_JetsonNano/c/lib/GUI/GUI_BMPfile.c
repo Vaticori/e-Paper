@@ -60,7 +60,7 @@ UBYTE GUI_ReadBmp(const char *path, UWORD Xstart, UWORD Ystart)
     FILE *fp;                     //Define a file pointer
     BMPFILEHEADER bmpFileHeader;  //Define a bmp file header structure
     BMPINFOHEADER bmpInfoHeader;  //Define a bmp info header structure
-
+    //these header vars store BMP file header & info header
 
     // Binary file open
     if((fp = fopen(path, "rb")) == NULL) {
@@ -77,7 +77,11 @@ UBYTE GUI_ReadBmp(const char *path, UWORD Xstart, UWORD Ystart)
     UWORD Image_Width_Byte = (bmpInfoHeader.biWidth % 8 == 0)? (bmpInfoHeader.biWidth / 8): (bmpInfoHeader.biWidth / 8 + 1);
     UWORD Bmp_Width_Byte = (Image_Width_Byte % 4 == 0) ? Image_Width_Byte: ((Image_Width_Byte / 4 + 1) * 4);
     UBYTE Image[Image_Width_Byte * bmpInfoHeader.biHeight];
-    memset(Image, 0xFF, Image_Width_Byte * bmpInfoHeader.biHeight);
+    memset(Image, 0xFF, Image_Width_Byte * bmpInfoHeader.biHeight); 
+    /*sets every value in the block of memory at Image to be equal 
+    to the value 0xFF, and the size of the memory area to be equal 
+    to the size of the screen pixels */
+
 
     // Determine if it is a monochrome bitmap
     int readbyte = bmpInfoHeader.biBitCount;
@@ -108,7 +112,7 @@ UBYTE GUI_ReadBmp(const char *path, UWORD Xstart, UWORD Ystart)
     // Read image data into the cache
     UWORD x, y;
     UBYTE Rdata;
-    fseek(fp, bmpFileHeader.bOffset, SEEK_SET);
+    fseek(fp, bmpFileHeader.bOffset, SEEK_SET); //seek set = 0, therefore we set pointer to start of pixel data.
     for(y = 0; y < bmpInfoHeader.biHeight; y++) {//Total display column
         for(x = 0; x < Bmp_Width_Byte; x++) {//Show a line in the line
             if(fread((char *)&Rdata, 1, readbyte, fp) != readbyte) {

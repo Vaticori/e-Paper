@@ -76,6 +76,8 @@
 /**
  * Image attributes
 **/
+/*"typedef": meaning create a new name for an existing type, where the
+ alias is "PAINT" */
 typedef struct {
     UBYTE *Image;
     UWORD Width;
@@ -89,7 +91,8 @@ typedef struct {
     UWORD HeightByte;
     UWORD Scale;
 } PAINT;
-extern PAINT Paint;
+extern PAINT Paint; 
+//"extern" declares global variable or function in another file
 
 /**
  * Display rotate
@@ -102,7 +105,7 @@ extern PAINT Paint;
 /**
  * Display Flip
 **/
-typedef enum {
+typedef enum { //"enum" is an "enumeration type"
     MIRROR_NONE  = 0x00,
     MIRROR_HORIZONTAL = 0x01,
     MIRROR_VERTICAL = 0x02,

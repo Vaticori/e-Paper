@@ -55,7 +55,7 @@
 /*Bitmap file header   14bit*/
 typedef struct BMP_FILE_HEADER {
     UWORD bType;        //File identifier
-    UDOUBLE bSize;      //The size of the file
+    UDOUBLE bSize;      //The size of the file (in BYTES)
     UWORD bReserved1;   //Reserved value, must be set to 0
     UWORD bReserved2;   //Reserved value, must be set to 0
     UDOUBLE bOffset;    //The offset from the beginning of the file header to the beginning of the image data bit

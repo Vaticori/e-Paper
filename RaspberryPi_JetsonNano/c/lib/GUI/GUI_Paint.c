@@ -95,6 +95,7 @@ parameter:
 ******************************************************************************/
 void Paint_NewImage(UBYTE *image, UWORD Width, UWORD Height, UWORD Rotate, UWORD Color)
 {
+    // we are initializing a paint struct here, which will point to an 'image' buffer
     Paint.Image = NULL;
     Paint.Image = image;
 

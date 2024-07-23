@@ -49,25 +49,27 @@ int EPD_7in5b_V2_test(void)
     DEV_Delay_ms(500);
 	
     //Create a new image cache named IMAGE_BW and fill it with white
-    UBYTE *BlackImage, *RYImage;
+    UBYTE *BlackImage, *RYImage; //we are creating 2 pointers to unsigned bytes.
     UWORD Imagesize = ((EPD_7IN5B_V2_WIDTH % 8 == 0)? (EPD_7IN5B_V2_WIDTH / 8 ): (EPD_7IN5B_V2_WIDTH / 8 + 1)) * EPD_7IN5B_V2_HEIGHT;
+    //UWORD is a 16-bit unsigned integer, meaning it can hold values from 0 to 65,535.
     if((BlackImage = (UBYTE *)malloc(Imagesize)) == NULL) {
         printf("Failed to apply for black memory...\r\n");
         return -1;
     }
-    if((RYImage = (UBYTE *)malloc(Imagesize)) == NULL) {
-        printf("Failed to apply for red memory...\r\n");
-        return -1;
-    }
+    // if((RYImage = (UBYTE *)malloc(Imagesize)) == NULL) {
+    //     printf("Failed to apply for red memory...\r\n");
+    //     return -1;
+    // }
     printf("NewImage:BlackImage and RYImage\r\n");
     Paint_NewImage(BlackImage, EPD_7IN5B_V2_WIDTH, EPD_7IN5B_V2_HEIGHT , 0, WHITE);
-    Paint_NewImage(RYImage, EPD_7IN5B_V2_WIDTH, EPD_7IN5B_V2_HEIGHT , 0, WHITE);
+    // Paint_NewImage(RYImage, EPD_7IN5B_V2_WIDTH, EPD_7IN5B_V2_HEIGHT , 0, WHITE);
 
-    //Select Image
+    //Select Image 
+    //set Image parameter of Image struct to "BlackImage" which is just 
     Paint_SelectImage(BlackImage);
     Paint_Clear(WHITE);
-    Paint_SelectImage(RYImage);
-    Paint_Clear(WHITE);
+    // Paint_SelectImage(RYImage);
+    // Paint_Clear(WHITE);
 
 #if 1   // show bmp
     printf("show window BMP-----------------\r\n");
@@ -108,7 +110,7 @@ int EPD_7in5b_V2_test(void)
     Paint_DrawRectangle(20, 70, 70, 120, BLACK, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
     Paint_DrawRectangle(80, 70, 130, 120, BLACK, DOT_PIXEL_1X1, DRAW_FILL_FULL);
     Paint_DrawString_EN(10, 0, "waveshare", &Font16, BLACK, WHITE);    
-    Paint_DrawString_CN(130, 20, "Î¢Ñ©µç×Ó", &Font24CN, WHITE, BLACK);
+    Paint_DrawString_CN(130, 20, "Î¢Ñ©ï¿½ï¿½ï¿½ï¿½", &Font24CN, WHITE, BLACK);
     Paint_DrawNum(10, 50, 987654321, &Font16, WHITE, BLACK);
     
     //2.Draw red image
@@ -118,7 +120,7 @@ int EPD_7in5b_V2_test(void)
     Paint_DrawCircle(210, 95, 20, BLACK, DOT_PIXEL_1X1, DRAW_FILL_FULL);
     Paint_DrawLine(85, 95, 125, 95, BLACK, DOT_PIXEL_1X1, LINE_STYLE_DOTTED);
     Paint_DrawLine(105, 75, 105, 115, BLACK, DOT_PIXEL_1X1, LINE_STYLE_DOTTED);  
-    Paint_DrawString_CN(130, 0,"ÄãºÃabc", &Font12CN, BLACK, WHITE);
+    Paint_DrawString_CN(130, 0,"ï¿½ï¿½ï¿½abc", &Font12CN, BLACK, WHITE);
     Paint_DrawString_EN(10, 20, "hello world", &Font12, WHITE, BLACK);
     Paint_DrawNum(10, 33, 123456789, &Font12, BLACK, WHITE);
     
